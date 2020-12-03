@@ -1,8 +1,7 @@
 
 unsigned long lastflash;
 int RPM;
-int OUT;
-int TV1;
+
 
 
 void setup() {
@@ -13,20 +12,14 @@ void setup() {
     analogReference(EXTERNAL);
 }
 void sens() {
-    // функция для расчета при вращении
-    RPM=60/((float)(micros()-lastflash)/1000000);  //расчет
-    lastflash=micros();  //запомнить время последнего оборота
-    OUT = map (RPM, 0, 2800, 0, 255); //выходная карта
-
+  RPM=60/((float)(micros()-lastflash)/1000000);  //расчет
+  lastflash=micros();  //запомнить время последнего оборота
 }
 
 void loop() {
-    if ((micros()-lastflash)>1000000){ //если сигнала нет больше секунды
-        RPM=0;  //считаем что RPM 0
-        OUT = map (RPM, 0, 2800, 0, 255); }
-        //TV1 = 1234; 
-        //else { sens();}
-  
-Serial.println(OUT);   //вывод в порт
-delay(3);  //задержка для стабильности
+  if ((micros()-lastflash)>1000000){ //если сигнала нет больше секунды
+    RPM=0;  //считаем что RPM 0
+  }
+  Serial.println(RPM/2);   //вывод в порт
+  delay(50);  //задержка для стабильности
 }
