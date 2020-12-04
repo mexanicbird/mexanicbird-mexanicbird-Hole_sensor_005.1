@@ -1,6 +1,7 @@
 
 unsigned long lastflash;
 int RPM;
+int RPM_1;
 
 
 
@@ -14,12 +15,14 @@ void setup() {
 void sens() {
   RPM=60/((float)(micros()-lastflash)/1000000);  //расчет
   lastflash=micros();  //запомнить время последнего оборота
+  if ( RPM >= 0 && RPM <=3500){
+  RPM_1 = RPM;
 }
-
+}
 void loop() {
-  if ((micros()-lastflash)>1000000){ //если сигнала нет больше секунды
-    RPM=0;  //считаем что RPM 0
+  if ((micros()-lastflash)>500000){ //если сигнала нет больше секунды
+    RPM_1=0;  //считаем что RPM 0
   }
-  Serial.println(RPM/2);   //вывод в порт
+  Serial.println(RPM_1/2);   //вывод в порт
   delay(50);  //задержка для стабильности
 }
